@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IPL Cricket Portal</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+color:white;
+font-family:Segoe UI;
+transition:.4s;
+}
+
+.dark{
+background:black;
+color:white;
+}
+
+/* navbar */
+
+.navbar{
+background:black;
+}
+
+/* hero */
+
+.hero{
+height:90vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+}
+
+.hero h1{
+font-size:65px;
+animation:fade 1.5s;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(-30px)}
+to{opacity:1}
+}
+
+/* teams */
+
+.team-card{
+background:#111;
+padding:20px;
+border-radius:12px;
+text-align:center;
+transition:.4s;
+}
+
+.team-card:hover{
+transform:scale(1.08);
+box-shadow:0 0 20px cyan;
+}
+
+.team-card img{
+width:80px;
+}
+
+/* tables */
+
+table{
+background:white;
+color:black;
+}
+
+/* winners */
+
+.winner{
+background:#111;
+padding:20px;
+border-radius:10px;
+transition:.3s;
+}
+
+.winner:hover{
+transform:translateY(-5px);
+background:#222;
+}
+
+/* form */
+
+form{
+background:#111;
+padding:25px;
+border-radius:10px;
+max-width:450px;
+margin:auto;
+}
+
+section{
+padding:70px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+<div class="container">
+
+<a class="navbar-brand">🏏 IPL PORTAL</a>
+
+<ul class="navbar-nav">
+
+<li class="nav-item"><a class="nav-link" href="#teams">Teams</a></li>
+<li class="nav-item"><a class="nav-link" href="#players">Players</a></li>
+<li class="nav-item"><a class="nav-link" href="#stats">Stats</a></li>
+<li class="nav-item"><a class="nav-link" href="#ranking">Ranking</a></li>
+<li class="nav-item"><a class="nav-link" href="#history">History</a></li>
+<li class="nav-item"><a class="nav-link" href="#fan">Fan Zone</a></li>
+
+</ul>
+
+<button class="btn btn-warning ms-3" onclick="toggleTheme()">Theme</button>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Indian Premier League</h1>
+<p>Teams • Players • Stats • History</p>
+
+<button class="btn btn-warning" onclick="loadScore()">Live Score</button>
+
+<p id="liveScore"></p>
+
+</section>
+
+<!-- TEAMS -->
+
+<section id="teams">
+
+<div class="container">
+
+<h2 class="text-center mb-5">IPL Teams</h2>
+
+<div class="row" id="teamContainer"></div>
+
+</div>
+
+</section>
+
+<!-- PLAYERS -->
+
+<section id="players">
+
+<div class="container">
+
+<h2 class="text-center mb-4">Players</h2>
+
+<input id="searchPlayer" class="form-control w-50 mx-auto mb-4" placeholder="Search player">
+
+<ul class="list-group w-50 mx-auto" id="playerList"></ul>
+
+</div>
+
+</section>
+
+<!-- STATS -->
+
+<section id="stats">
+
+<div class="container">
+
+<h2 class="text-center mb-4">Top Player Stats</h2>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+<th>Player</th>
+<th>Runs</th>
+<th>Wickets</th>
+</tr>
+
+</thead>
+
+<tbody id="statsTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- RANKINGS -->
+
+<section id="ranking">
+
+<div class="container">
+
+<h2 class="text-center mb-4">IPL Rankings</h2>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+<th>Rank</th>
+<th>Team</th>
+<th>Points</th>
+</tr>
+
+</thead>
+
+<tbody id="rankingTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- WINNERS -->
+
+<section id="history">
+
+<div class="container">
+
+<h2 class="text-center mb-4">IPL Champions</h2>
+
+<div class="row" id="winnerContainer"></div>
+
+</div>
+
+</section>
+
+<!-- FAN FORM -->
+
+<section id="fan">
+
+<div class="container">
+
+<h2 class="text-center mb-4">Fan Zone</h2>
+
+<form id="fanForm">
+
+<input id="name" class="form-control mb-3" placeholder="Name">
+
+<input id="email" class="form-control mb-3" placeholder="Email">
+
+<select id="favTeam" class="form-control mb-3">
+
+<option value="">Favourite Team</option>
+<option>CSK</option>
+<option>MI</option>
+<option>RCB</option>
+<option>KKR</option>
+
+</select>
+
+<button class="btn btn-success w-100">Submit</button>
+
+<p id="formMsg"></p>
+
+</form>
+
+</div>
+
+</section>
+
+<script>
+
+/* THEME */
+
+function toggleTheme(){
+document.body.classList.toggle("dark")
+}
+
+/* TEAMS */
+
+const teams=[
+
+["Chennai Super Kings","https://upload.wikimedia.org/wikipedia/en/2/2e/Chennai_Super_Kings_Logo.svg"],
+["Mumbai Indians","https://upload.wikimedia.org/wikipedia/en/c/cd/Mumbai_Indians_Logo.svg"],
+["Royal Challengers Bangalore","https://upload.wikimedia.org/wikipedia/en/4/47/Royal_Challengers_Bangalore_Logo.svg"],
+["Kolkata Knight Riders","https://upload.wikimedia.org/wikipedia/en/4/4a/Kolkata_Knight_Riders_Logo.svg"],
+["Sunrisers Hyderabad","https://upload.wikimedia.org/wikipedia/en/8/81/Sunrisers_Hyderabad.svg"],
+["Delhi Capitals","https://upload.wikimedia.org/wikipedia/en/2/2f/Delhi_Capitals.svg"],
+["Punjab Kings","https://upload.wikimedia.org/wikipedia/en/d/d4/Punjab_Kings_Logo.svg"],
+["Rajasthan Royals","https://upload.wikimedia.org/wikipedia/en/6/60/Rajasthan_Royals_Logo.svg"],
+["Lucknow Super Giants","https://upload.wikimedia.org/wikipedia/en/5/5c/Lucknow_Super_Giants_Logo.svg"],
+["Gujarat Titans","https://upload.wikimedia.org/wikipedia/en/0/09/Gujarat_Titans_Logo.svg"]
+
+]
+
+const teamContainer=document.getElementById("teamContainer")
+
+teams.forEach(team=>{
+
+teamContainer.innerHTML+=`
+
+<div class="col-md-3 mb-4">
+
+<div class="team-card">
+
+<img src="${team[1]}">
+
+<h5>${team[0]}</h5>
+
+<button class="btn btn-primary btn-sm" onclick="saveTeam('${team[0]}')">
+Favourite
+</button>
+
+</div>
+
+</div>
+
+`
+
+})
+
+/* LOCAL STORAGE */
+
+function saveTeam(team){
+
+localStorage.setItem("favTeam",team)
+
+alert("Favourite team saved!")
+
+}
+
+/* PLAYERS */
+
+const players=[
+
+"Virat Kohli","MS Dhoni","Rohit Sharma","KL Rahul",
+"Hardik Pandya","Ruturaj Gaikwad","Andre Russell",
+"Jos Buttler","Rashid Khan","Jasprit Bumrah"
+
+]
+
+const playerList=document.getElementById("playerList")
+
+function loadPlayers(){
+
+playerList.innerHTML=""
+
+players.forEach(p=>{
+playerList.innerHTML+=`<li class="list-group-item">${p}</li>`
+})
+
+}
+
+loadPlayers()
+
+/* PLAYER SEARCH */
+
+document.getElementById("searchPlayer")
+.addEventListener("keyup",function(){
+
+let value=this.value.toLowerCase()
+
+let filtered=players.filter(p=>p.toLowerCase().includes(value))
+
+playerList.innerHTML=""
+
+filtered.forEach(p=>{
+playerList.innerHTML+=`<li class="list-group-item">${p}</li>`
+})
+
+})
+
+/* PLAYER STATS */
+
+const stats=[
+
+["Virat Kohli",7263,4],
+["Rohit Sharma",6211,15],
+["MS Dhoni",5082,0],
+["Rashid Khan",500,149]
+
+]
+
+const statsTable=document.getElementById("statsTable")
+
+stats.forEach(s=>{
+
+statsTable.innerHTML+=`
+<tr>
+<td>${s[0]}</td>
+<td>${s[1]}</td>
+<td>${s[2]}</td>
+</tr>`
+
+})
+
+/* RANKINGS */
+
+const rankings=[
+
+["1","KKR","20"],
+["2","SRH","17"],
+["3","RR","17"],
+["4","RCB","14"],
+["5","CSK","12"]
+
+]
+
+const rankingTable=document.getElementById("rankingTable")
+
+rankings.forEach(r=>{
+
+rankingTable.innerHTML+=`
+
+<tr>
+<td>${r[0]}</td>
+<td>${r[1]}</td>
+<td>${r[2]}</td>
+</tr>
+
+`
+
+})
+
+/* WINNERS */
+
+const winners=[
+
+["2023","CSK","GT"],
+["2022","GT","RR"],
+["2021","CSK","KKR"],
+["2020","MI","DC"]
+
+]
+
+const winnerContainer=document.getElementById("winnerContainer")
+
+winners.forEach(w=>{
+
+winnerContainer.innerHTML+=`
+
+<div class="col-md-3">
+
+<div class="winner">
+
+<h4>${w[0]}</h4>
+<p>Winner: ${w[1]}</p>
+<p>Runner-up: ${w[2]}</p>
+
+</div>
+
+</div>
+
+`
+
+})
+
+/* FORM VALIDATION */
+
+document.getElementById("fanForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault()
+
+let name=document.getElementById("name").value
+let email=document.getElementById("email").value
+let team=document.getElementById("favTeam").value
+
+if(name==""||email==""||team==""){
+
+document.getElementById("formMsg").innerHTML="Fill all fields"
+document.getElementById("formMsg").style.color="red"
+
+}else{
+
+sessionStorage.setItem("fanName",name)
+
+document.getElementById("formMsg").innerHTML="Welcome "+name
+document.getElementById("formMsg").style.color="lightgreen"
+
+}
+
+})
+
+/* API */
+
+function loadScore(){
+
+fetch("https://api.cricapi.com/v1/cricScore?apikey=demo")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+document.getElementById("liveScore")
+.innerHTML="Live score data loaded (demo API)"
+
+})
+
+.catch(()=>{
+
+document.getElementById("liveScore")
+.innerHTML="API unavailable"
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
