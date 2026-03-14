@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K Aditya Portfolio</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+/* NAVBAR */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 60px;
+background:rgba(0,0,0,0.7);
+z-index:1000;
+}
+
+nav h1{
+color:#38bdf8;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav a{
+text-decoration:none;
+color:white;
+}
+
+nav a:hover{
+color:#38bdf8;
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:60px;
+flex-wrap:wrap;
+text-align:center;
+}
+
+.hero img{
+width:260px;
+border-radius:50%;
+border:5px solid #38bdf8;
+box-shadow:0 0 25px #38bdf8;
+}
+
+.hero h2{
+font-size:45px;
+}
+
+.hero span{
+color:#38bdf8;
+}
+
+.hero p{
+margin-top:10px;
+font-size:20px;
+}
+
+.btn{
+margin-top:20px;
+padding:12px 25px;
+border:none;
+background:#38bdf8;
+color:black;
+font-weight:bold;
+border-radius:25px;
+cursor:pointer;
+}
+
+.btn:hover{
+transform:scale(1.1);
+}
+
+/* SECTIONS */
+
+section{
+padding:100px 10%;
+}
+
+.title{
+text-align:center;
+font-size:35px;
+margin-bottom:40px;
+color:#38bdf8;
+}
+
+/* ABOUT */
+
+.about{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+align-items:center;
+}
+
+.about img{
+width:300px;
+border-radius:20px;
+}
+
+/* EDUCATION */
+
+.timeline{
+border-left:3px solid #38bdf8;
+padding-left:20px;
+}
+
+.timeline div{
+margin-bottom:30px;
+}
+
+/* SKILLS */
+
+.skill{
+margin-bottom:20px;
+}
+
+.progress{
+background:#1e293b;
+border-radius:20px;
+overflow:hidden;
+}
+
+.progress div{
+height:10px;
+background:#38bdf8;
+}
+
+/* CONTACT */
+
+.contact{
+text-align:center;
+}
+
+.contact input,
+.contact textarea{
+width:70%;
+padding:10px;
+margin:10px;
+border-radius:10px;
+border:none;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:black;
+}
+
+@media(max-width:900px){
+
+.about{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.hero{
+flex-direction:column;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<h1>K Aditya</h1>
+
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#education">Education</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div>
+<img src="aditya.jpg" alt="K Aditya">
+</div>
+
+<div>
+
+<h2>Hello I'm <span>K Aditya</span></h2>
+
+<p id="typing"></p>
+
+<button class="btn" onclick="scrollToAbout()">View Portfolio</button>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<h2 class="title">About Me</h2>
+
+<div class="about">
+
+<div>
+
+<p>
+
+I am <b>K Aditya</b>, a passionate technology enthusiast and 
+B.Tech student currently pursuing my degree at 
+<b>KL University, Aziz Nagar (2025-2029)</b>.
+
+I enjoy learning programming, web development and modern
+technologies. My goal is to become a professional software
+developer and build innovative digital products.
+
+</p>
+
+</div>
+
+<div>
+
+<img src="aditya.jpg">
+
+</div>
+
+</div>
+
+</section>
+
+<!-- EDUCATION -->
+
+<section id="education">
+
+<h2 class="title">Education</h2>
+
+<div class="timeline">
+
+<div>
+
+<h3>10th Grade</h3>
+<p>DAV Public School, Safilguda</p>
+
+</div>
+
+<div>
+
+<h3>Intermediate</h3>
+<p>Trividya Junior College, Rao Nagar</p>
+
+</div>
+
+<div>
+
+<h3>B.Tech (2025-2029)</h3>
+<p>KL University, Aziz Nagar</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section id="skills">
+
+<h2 class="title">Skills</h2>
+
+<div class="skill">
+<p>HTML</p>
+<div class="progress"><div style="width:90%"></div></div>
+</div>
+
+<div class="skill">
+<p>CSS</p>
+<div class="progress"><div style="width:85%"></div></div>
+</div>
+
+<div class="skill">
+<p>JavaScript</p>
+<div class="progress"><div style="width:70%"></div></div>
+</div>
+
+<div class="skill">
+<p>Java</p>
+<div class="progress"><div style="width:65%"></div></div>
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact" class="contact">
+
+<h2 class="title">Contact</h2>
+
+<input type="text" placeholder="Your Name"><br>
+<input type="email" placeholder="Your Email"><br>
+<textarea rows="5" placeholder="Your Message"></textarea><br>
+
+<button class="btn" onclick="sendMsg()">Send Message</button>
+
+</section>
+
+<footer>
+
+<p>© 2026 K Aditya Portfolio</p>
+
+</footer>
+
+<script>
+
+/* typing effect */
+
+const text="B.Tech Student | Future Software Developer";
+let i=0;
+
+function typing(){
+
+if(i<text.length){
+
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+
+setTimeout(typing,70);
+
+}
+
+}
+
+typing();
+
+/* scroll */
+
+function scrollToAbout(){
+document.getElementById("about").scrollIntoView();
+}
+
+/* contact */
+
+function sendMsg(){
+alert("Message sent successfully!");
+}
+
+</script>
+
+</body>
+</html>
